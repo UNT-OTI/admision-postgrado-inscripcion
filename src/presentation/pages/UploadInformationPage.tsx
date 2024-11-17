@@ -13,7 +13,7 @@ export const UploadInformationPage = () => {
   const { questionnaire, submitCVDataForm } = admissionContext;
 
   return (
-    <section className="py-10 mb-[55px] px-5 lg:px-[340px]">
+    <>
       <h2 className="text-[#00439e] uppercase text-[30px] text-center font-normal">
         Evaluación de cv
       </h2>
@@ -28,6 +28,6 @@ export const UploadInformationPage = () => {
       >
         Grabar
       </button>
-    </section>
+    </>
   );
 };

@@ -9,14 +9,16 @@ interface Props {
 
 interface AdmissionContextType {
   questionnaire: FormQuestions;
-  addAnswerToQuestions: (answersToQuestions: AnswersToSimpleQuestions) => void;
+  addAnswerToQuestions: (answersToQuestions: AnswersToQuestions) => void;
   submitCVDataForm: () => void;
 }
 
-interface AnswersToSimpleQuestions {
+interface AnswersToQuestions {
   questionLabel: string;
   itemLabel: string;
-  itemValue: number;
+  itemValue?: number | undefined;
+  subItemLabel?: string | number | undefined;
+  subItemValue?: number | undefined;
 }
 
 const AdmissionContext = createContext<AdmissionContextType | undefined>(
@@ -25,30 +27,53 @@ const AdmissionContext = createContext<AdmissionContextType | undefined>(
 
 export const AdmissionProvider = ({ children }: Props) => {
   const questionnaire = formQuestions;
-  const [markedQuestions, setMarkedQuestions] = useState<
-    AnswersToSimpleQuestions[]
-  >([]);
+  const [markedQuestions, setMarkedQuestions] = useState<AnswersToQuestions[]>(
+    []
+  );
 
-  const addAnswerToQuestions = ({
-    questionLabel,
-    itemLabel,
-    itemValue,
-  }: AnswersToSimpleQuestions) => {
+  const addAnswerToQuestions = (answer: AnswersToQuestions) => {
+    const { questionLabel, itemLabel, itemValue, subItemLabel, subItemValue } =
+      answer;
     const tempMarkedQuestions = [...markedQuestions];
-    const questionMarkedPosition = tempMarkedQuestions.findIndex(
-      (markedQuestion) => markedQuestion.questionLabel === questionLabel
-    );
-    if (questionMarkedPosition !== -1) {
+    let questionMarkedPosition: number;
+    if (!subItemLabel && !subItemValue) {
+      questionMarkedPosition = tempMarkedQuestions.findIndex(
+        (markedQuestion) => markedQuestion.questionLabel === questionLabel
+      );
+    } else {
+      questionMarkedPosition = tempMarkedQuestions.findIndex(
+        (markedQuestion) =>
+          markedQuestion.questionLabel === questionLabel &&
+          markedQuestion.itemLabel === itemLabel
+      );
+    }
+
+    if (questionMarkedPosition !== -1 && !subItemLabel && !subItemValue) {
       tempMarkedQuestions.splice(questionMarkedPosition, 1, {
         questionLabel,
         itemLabel,
         itemValue,
       });
       setMarkedQuestions(tempMarkedQuestions);
-    } else {
+    } else if (!subItemLabel && !subItemValue) {
       setMarkedQuestions((prevState) => [
         ...prevState,
         { questionLabel, itemLabel, itemValue },
+      ]);
+    }
+
+    if (questionMarkedPosition !== -1 && subItemLabel && subItemValue) {
+      tempMarkedQuestions.splice(questionMarkedPosition, 1, {
+        questionLabel,
+        itemLabel,
+        subItemLabel,
+        subItemValue,
+      });
+      setMarkedQuestions(tempMarkedQuestions);
+    } else if (subItemLabel && subItemValue) {
+      setMarkedQuestions((prevState) => [
+        ...prevState,
+        { questionLabel, itemLabel, subItemLabel, subItemValue },
       ]);
     }
   };

@@ -5,7 +5,9 @@ export const MainLayout = () => {
   return (
     <>
       <Header />
-      <Outlet />
+      <div className="py-10 mb-[55px] px-5 lg:px-[340px]">
+        <Outlet />
+      </div>
       <Footer />
     </>
   );

@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import AdmissionContext from "../../context/AdmissionProvider";
 import { ItemWithSubItems } from "../../../infrastructure/interfaces/questions";
 
 interface Props {
@@ -6,7 +8,17 @@ interface Props {
 }
 
 export const ComposedOptions = ({ item, questionLabel }: Props) => {
+  const admissionContext = useContext(AdmissionContext);
+
+  if (!admissionContext)
+    throw new Error(
+      "ComposedOptions.tsx debe estar dentro del provider AdmissionProvider.tsx"
+    );
+
+  const { addAnswerToQuestions } = admissionContext;
+
   const radioElementName = `Pregunta: ${questionLabel} - Item: ${item.itemLabel}`;
+
   return (
     <div className="flex flex-col mb-3">
       <label className="text-[18px]">{item.itemLabel}</label>
@@ -20,6 +32,15 @@ export const ComposedOptions = ({ item, questionLabel }: Props) => {
               <input
                 id={`${item.itemLabel} - ${subItem.subItemValue}`}
                 name={radioElementName}
+                value={subItem.subItemValue}
+                onChange={() =>
+                  addAnswerToQuestions({
+                    questionLabel,
+                    itemLabel: item.itemLabel,
+                    subItemLabel: subItem.subItemLabel,
+                    subItemValue: subItem.subItemValue,
+                  })
+                }
                 type="radio"
               />
               <label htmlFor={`${item.itemLabel} - ${subItem.subItemValue}`}>
