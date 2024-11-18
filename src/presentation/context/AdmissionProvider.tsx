@@ -1,5 +1,4 @@
 import { createContext, useState } from "react";
-import Swal from "sweetalert2";
 import { FormQuestions } from "../../infrastructure/interfaces/questions";
 import { formQuestions } from "../data";
 
@@ -8,12 +7,14 @@ interface Props {
 }
 
 interface AdmissionContextType {
+  markedQuestions: AnswersToQuestions[];
   questionnaire: FormQuestions;
+  totalQualification: number;
   addAnswerToQuestions: (answersToQuestions: AnswersToQuestions) => void;
-  submitCVDataForm: () => void;
+  setTotalQualification: (stateQualification: number) => void;
 }
 
-interface AnswersToQuestions {
+export interface AnswersToQuestions {
   questionLabel: string;
   itemLabel: string;
   itemValue?: number | undefined;
@@ -30,6 +31,7 @@ export const AdmissionProvider = ({ children }: Props) => {
   const [markedQuestions, setMarkedQuestions] = useState<AnswersToQuestions[]>(
     []
   );
+  const [totalQualification, setTotalQualification] = useState<number>(0);
 
   const addAnswerToQuestions = (answer: AnswersToQuestions) => {
     const { questionLabel, itemLabel, itemValue, subItemLabel, subItemValue } =
@@ -78,28 +80,14 @@ export const AdmissionProvider = ({ children }: Props) => {
     }
   };
 
-  const submitCVDataForm = () => {
-    Swal.fire({
-      title: "¿Está seguro?",
-      html: `
-      <p>Las respuestas no podrán ser modificadas.</p>
-      `,
-      showCancelButton: true,
-      confirmButtonText: "Ok",
-      denyButtonText: `Cancelar`,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire("Datos Grabados Correctamente!", "", "success");
-      }
-    });
-  };
-
   return (
     <AdmissionContext.Provider
       value={{
         questionnaire,
+        markedQuestions,
+        totalQualification,
         addAnswerToQuestions,
-        submitCVDataForm,
+        setTotalQualification,
       }}
     >
       {children}

@@ -3,8 +3,6 @@ import {
   ItemWithSubItems,
 } from "../../infrastructure/interfaces/questions";
 
-export const isItemWithSubItems = (
-  item: Item | ItemWithSubItems
-): item is ItemWithSubItems => {
+export const isItemWithSubItems = (item: Item | ItemWithSubItems): boolean => {
   return "subItems" in item;
 };

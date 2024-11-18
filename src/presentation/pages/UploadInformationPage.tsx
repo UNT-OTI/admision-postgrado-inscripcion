@@ -1,16 +1,65 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import AdmissionContext from "../context/AdmissionProvider";
 import { RadioButtonsGroupByQuestion } from "../components/ui";
+import { isMarkedQuestionWithItemValue } from "../../config/helpers";
 
 export const UploadInformationPage = () => {
   const admissionContext = useContext(AdmissionContext);
+  const navigate = useNavigate();
 
   if (!admissionContext)
     throw new Error(
       "UploadInfomationPage.tsx debe estar dentro del provider AdmissionProvider.tsx"
     );
 
-  const { questionnaire, submitCVDataForm } = admissionContext;
+  const { markedQuestions, questionnaire, setTotalQualification } =
+    admissionContext;
+
+  const submitCVDataForm = () => {
+    if (markedQuestions.length < 12) {
+      Swal.fire({
+        title: "¡Error!",
+        icon: "error",
+        html: `
+        <p>Debe llenar todos los campos del formulario.</p>
+        `,
+        confirmButtonColor: "#00439E",
+        showConfirmButton: true,
+      });
+    } else {
+      Swal.fire({
+        title: "¿Está seguro?",
+        icon: "question",
+        html: `
+        <p>Las respuestas no podrán ser modificadas.</p>
+        `,
+        confirmButtonColor: "#00439E",
+        confirmButtonText: "Ok",
+        denyButtonText: `Cancelar`,
+        showCancelButton: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const total = markedQuestions.reduce(
+            (totalByQuestion, currentQuestion) => {
+              if (isMarkedQuestionWithItemValue(currentQuestion)) {
+                return totalByQuestion + (currentQuestion?.itemValue ?? 0);
+              } else {
+                return totalByQuestion + (currentQuestion?.subItemValue ?? 0);
+              }
+            },
+            0
+          );
+          setTotalQualification(total);
+          Swal.fire("Datos Grabados Correctamente!", "", "success");
+          navigate("/resultados-evaluacion", {
+            replace: true,
+          });
+        }
+      });
+    }
+  };
 
   return (
     <>
