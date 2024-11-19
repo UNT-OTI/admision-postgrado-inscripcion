@@ -52,10 +52,15 @@ export const UploadInformationPage = () => {
             0
           );
           setTotalQualification(total);
-          Swal.fire("Datos Grabados Correctamente!", "", "success");
-          navigate("/resultados-evaluacion", {
-            replace: true,
-          });
+          Swal.fire("Datos Grabados Correctamente!", "", "success").then(
+            (result) => {
+              if (result.isConfirmed) {
+                navigate("/resultados-evaluacion", {
+                  replace: true,
+                });
+              }
+            }
+          );
         }
       });
     }
