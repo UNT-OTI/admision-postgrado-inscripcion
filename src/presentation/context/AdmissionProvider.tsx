@@ -7,11 +7,13 @@ interface Props {
 }
 
 interface AdmissionContextType {
+  isLoading: boolean;
   isUploadConfirmed: boolean;
   markedQuestions: AnswersToQuestions[];
   questionnaire: FormQuestions;
   totalQualification: number;
   addAnswerToQuestions: (answersToQuestions: AnswersToQuestions) => void;
+  setIsLoading: (stateIsLoading: boolean) => void;
   setIsUploadConfirmed: (stateIsUploadConfirmed: boolean) => void;
   setTotalQualification: (stateTotalQualification: number) => void;
 }
@@ -30,6 +32,7 @@ const AdmissionContext = createContext<AdmissionContextType | undefined>(
 
 export const AdmissionProvider = ({ children }: Props) => {
   const questionnaire = formQuestions;
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isUploadConfirmed, setIsUploadConfirmed] = useState<boolean>(false);
   const [markedQuestions, setMarkedQuestions] = useState<AnswersToQuestions[]>(
     []
@@ -91,11 +94,13 @@ export const AdmissionProvider = ({ children }: Props) => {
   return (
     <AdmissionContext.Provider
       value={{
+        isLoading,
         isUploadConfirmed,
         markedQuestions,
         questionnaire,
         totalQualification,
         addAnswerToQuestions,
+        setIsLoading,
         setIsUploadConfirmed,
         setTotalQualification,
       }}

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import AdmissionContext from "../context/AdmissionProvider";
 import { RadioButtonsGroupByQuestion } from "../components/ui";
@@ -14,16 +14,8 @@ export const UploadInformationPage = () => {
       "UploadInfomationPage.tsx debe estar dentro del provider AdmissionProvider.tsx"
     );
 
-  const {
-    isUploadConfirmed,
-    markedQuestions,
-    questionnaire,
-    setTotalQualification,
-  } = admissionContext;
-
-  if (isUploadConfirmed) {
-    return <Navigate to="/documentos-previsualizacion" replace />;
-  }
+  const { markedQuestions, questionnaire, setTotalQualification } =
+    admissionContext;
 
   const submitCVDataForm = () => {
     if (markedQuestions.length < 12) {
