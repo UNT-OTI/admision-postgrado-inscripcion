@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { FormQuestions } from "../../infrastructure/interfaces/questions";
 import { formQuestions } from "../data";
 
@@ -7,11 +7,13 @@ interface Props {
 }
 
 interface AdmissionContextType {
+  isUploadConfirmed: boolean;
   markedQuestions: AnswersToQuestions[];
   questionnaire: FormQuestions;
   totalQualification: number;
   addAnswerToQuestions: (answersToQuestions: AnswersToQuestions) => void;
-  setTotalQualification: (stateQualification: number) => void;
+  setIsUploadConfirmed: (stateIsUploadConfirmed: boolean) => void;
+  setTotalQualification: (stateTotalQualification: number) => void;
 }
 
 export interface AnswersToQuestions {
@@ -28,9 +30,15 @@ const AdmissionContext = createContext<AdmissionContextType | undefined>(
 
 export const AdmissionProvider = ({ children }: Props) => {
   const questionnaire = formQuestions;
+  const [isUploadConfirmed, setIsUploadConfirmed] = useState<boolean>(false);
   const [markedQuestions, setMarkedQuestions] = useState<AnswersToQuestions[]>(
     []
   );
+
+  useEffect(() => {
+    localStorage.setItem("marked-questions", JSON.stringify(markedQuestions));
+  }, [markedQuestions]);
+
   const [totalQualification, setTotalQualification] = useState<number>(0);
 
   const addAnswerToQuestions = (answer: AnswersToQuestions) => {
@@ -83,10 +91,12 @@ export const AdmissionProvider = ({ children }: Props) => {
   return (
     <AdmissionContext.Provider
       value={{
-        questionnaire,
+        isUploadConfirmed,
         markedQuestions,
+        questionnaire,
         totalQualification,
         addAnswerToQuestions,
+        setIsUploadConfirmed,
         setTotalQualification,
       }}
     >

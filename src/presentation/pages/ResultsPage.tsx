@@ -1,16 +1,9 @@
-import { useContext } from "react";
-import AdmissionContext from "../context/AdmissionProvider";
 import { groupAnswersToQuestions } from "../../config/helpers";
 
 export const ResultsPage = () => {
-  const admissionContext = useContext(AdmissionContext);
-
-  if (!admissionContext)
-    throw new Error(
-      "ResultsPage.tsx debe estar dentro del provider AdmissionProvider.tsx"
-    );
-
-  const { markedQuestions } = admissionContext;
+  const markedQuestions = JSON.parse(
+    localStorage.getItem("marked-questions") ?? "[]"
+  );
   const groupedAnswers = groupAnswersToQuestions(markedQuestions);
 
   return (
@@ -20,7 +13,7 @@ export const ResultsPage = () => {
       </h2>
       {groupedAnswers.map((markedQuestion, markedQuestionIndex) =>
         !("items" in markedQuestion) ? (
-          <div className="first-of-type:mt-5 mt-3" key={markedQuestionIndex}>
+          <div className="first-of-type:mt-8 mt-3" key={markedQuestionIndex}>
             <p className="text-xl">{markedQuestion.questionLabel}</p>
             <div className="mt-1">
               <p className="ml-5 font-bold">Opción Seleccionada:</p>

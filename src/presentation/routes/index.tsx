@@ -9,11 +9,12 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <PreviewPage />,
+        index: true,
+        element: <UploadInformationPage />,
       },
       {
-        path: "/subir-datos",
-        element: <UploadInformationPage />,
+        path: "/documentos-previsualizacion",
+        element: <PreviewPage />,
       },
       {
         path: "/resultados-evaluacion",
