@@ -3,7 +3,10 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import AdmissionContext from "../context/AdmissionProvider";
 import { RadioButtonsGroupByQuestion } from "../components/ui";
-import { isMarkedQuestionWithItemValue } from "../../config/helpers";
+import {
+  isFormValid,
+  isMarkedQuestionWithItemValue,
+} from "../../config/helpers";
 
 export const UploadInformationPage = () => {
   const admissionContext = useContext(AdmissionContext);
@@ -18,7 +21,7 @@ export const UploadInformationPage = () => {
     admissionContext;
 
   const submitCVDataForm = () => {
-    if (markedQuestions.length < 12) {
+    if (!isFormValid(markedQuestions, questionnaire)) {
       Swal.fire({
         title: "¡Error!",
         icon: "error",

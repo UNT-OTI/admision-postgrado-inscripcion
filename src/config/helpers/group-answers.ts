@@ -1,5 +1,7 @@
-import { AnswersToQuestions } from "../../presentation/context/AdmissionProvider";
-import { GroupedAnswers } from "../../infrastructure/interfaces/answers";
+import {
+  AnswersToQuestions,
+  GroupedAnswers,
+} from "../../infrastructure/interfaces/answers";
 
 export const groupAnswersToQuestions = (
   markedQuestions: AnswersToQuestions[]

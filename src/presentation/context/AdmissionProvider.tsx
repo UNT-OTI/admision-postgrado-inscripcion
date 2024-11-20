@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import { AnswersToQuestions } from "../../infrastructure/interfaces/answers";
 import { FormQuestions } from "../../infrastructure/interfaces/questions";
 import { formQuestions } from "../data";
 
@@ -16,14 +17,6 @@ interface AdmissionContextType {
   setIsLoading: (stateIsLoading: boolean) => void;
   setIsUploadConfirmed: (stateIsUploadConfirmed: boolean) => void;
   setTotalQualification: (stateTotalQualification: number) => void;
-}
-
-export interface AnswersToQuestions {
-  questionLabel: string;
-  itemLabel: string;
-  itemValue?: number | undefined;
-  subItemLabel?: string | number | undefined;
-  subItemValue?: number | undefined;
 }
 
 const AdmissionContext = createContext<AdmissionContextType | undefined>(

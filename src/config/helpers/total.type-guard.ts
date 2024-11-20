@@ -1,4 +1,4 @@
-import { AnswersToQuestions } from "../../presentation/context/AdmissionProvider";
+import { AnswersToQuestions } from "../../infrastructure/interfaces/answers";
 
 export const isMarkedQuestionWithItemValue = (
   answerToQuestions: AnswersToQuestions

@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { Loader } from "../components/animations/Loader";
-import AdmissionContext from "../context/AdmissionProvider";
 import { Navigate } from "react-router-dom";
+import AdmissionContext from "../context/AdmissionProvider";
+import { Loader } from "../components/animations";
 
 export const PreviewPage = () => {
   const admissionContext = useContext(AdmissionContext);
