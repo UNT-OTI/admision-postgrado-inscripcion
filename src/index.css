@@ -33,3 +33,11 @@
     opacity: 0;
   }
 }
+
+.first-row-column {
+  @apply border-solid border-[1px] border-b-[3px] border-l-gray-200 border-t-gray-200 border-r-gray-200 border-b-[#5B84B7] py-1 px-3;
+}
+
+.heading-column {
+  @apply uppercase text-center font-semibold;
+}
