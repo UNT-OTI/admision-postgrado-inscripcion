@@ -1,16 +1,10 @@
-import { useContext } from "react";
 import { Navigate } from "react-router-dom";
-import AdmissionContext from "../context/AdmissionProvider";
 import { Loader } from "../components/animations";
 import UploadIcon from "../../assets/icons/upload.svg";
+import { useAdmission } from "../hooks";
 
 export const PreviewPage = () => {
-  const admissionContext = useContext(AdmissionContext);
-
-  if (!admissionContext)
-    throw new Error(
-      "PreviewPage.tsx debe estar dentro del provider AdmissionProvider.tsx"
-    );
+  const admissionContext = useAdmission();
 
   const { isLoading, isUploadConfirmed, setIsLoading } = admissionContext;
 

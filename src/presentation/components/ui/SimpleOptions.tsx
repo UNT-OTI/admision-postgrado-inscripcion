@@ -1,5 +1,4 @@
-import { useContext } from "react";
-import AdmissionContext from "../../context/AdmissionProvider";
+import { useAdmission } from "../../hooks";
 
 interface Props {
   itemLabel: string;
@@ -12,12 +11,7 @@ export const SimpleOptions = ({
   itemValue,
   questionLabel,
 }: Props) => {
-  const admissionContext = useContext(AdmissionContext);
-
-  if (!admissionContext)
-    throw new Error(
-      "SimpleOptions.tsx debe estar dentro del provider AdmissionProvider.tsx"
-    );
+  const admissionContext = useAdmission();
 
   const { addAnswerToQuestions } = admissionContext;
 

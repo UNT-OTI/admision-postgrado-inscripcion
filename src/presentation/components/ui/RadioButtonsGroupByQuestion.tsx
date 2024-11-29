@@ -1,5 +1,3 @@
-import { useContext } from "react";
-import AdmissionContext from "../../context/AdmissionProvider";
 import {
   QuestionWithChilds,
   SimpleQuestion,
@@ -13,12 +11,6 @@ interface Props {
 }
 
 export const RadioButtonsGroupByQuestion = ({ question }: Props) => {
-  const admissionContext = useContext(AdmissionContext);
-  if (!admissionContext)
-    throw new Error(
-      "CheckBoxGroup.tsx debe estar dentro del provider AdmissionProvider.tsx"
-    );
-
   const { questionLabel, items } = question;
 
   return (

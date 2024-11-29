@@ -1,21 +1,15 @@
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import AdmissionContext from "../context/AdmissionProvider";
 import { RadioButtonsGroupByQuestion } from "../components/ui";
 import {
   isFormValid,
   isMarkedQuestionWithItemValue,
 } from "../../config/helpers";
+import { useAdmission } from "../hooks";
 
 export const UploadInformationPage = () => {
-  const admissionContext = useContext(AdmissionContext);
+  const admissionContext = useAdmission();
   const navigate = useNavigate();
-
-  if (!admissionContext)
-    throw new Error(
-      "UploadInfomationPage.tsx debe estar dentro del provider AdmissionProvider.tsx"
-    );
 
   const { markedQuestions, questionnaire, setTotalQualification } =
     admissionContext;
