@@ -26,7 +26,7 @@ export const UploadInformationPage = () => {
         title: "¡Error!",
         icon: "error",
         html: `
-        <p>Debe llenar todos los campos del formulario.</p>
+        <p>Debe contestar todas las preguntas.</p>
         `,
         confirmButtonColor: "#00439E",
         showConfirmButton: true,

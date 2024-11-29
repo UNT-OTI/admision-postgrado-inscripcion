@@ -1,5 +1,5 @@
-import LocationIcon from "../../assets/icons/map.svg";
-import LogoUnt from "../../assets/imgs/logo-unt.png";
+import LocationIcon from "../../../assets/icons/map.svg";
+import LogoUnt from "../../../assets/imgs/logo-unt.png";
 
 export const Header = () => {
   return (
